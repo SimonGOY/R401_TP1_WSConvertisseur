@@ -1,4 +1,6 @@
-﻿namespace WSConvertisseur.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WSConvertisseur.Models
 {
     public class Devise
     {
@@ -24,6 +26,8 @@
                 id = value;
             }
         }
+
+        [Required]
         public string? Nomdevise
         {
             get

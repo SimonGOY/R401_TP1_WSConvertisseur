@@ -38,16 +38,36 @@ namespace WSConvertisseur.Controllers
             return devise;
         }
 
-        // POST api/<DevisesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Devise> Post([FromBody] Devise devise)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            lesDevises.Add(devise);
+            return CreatedAtRoute("GetDevise", new { id = devise.Id }, devise);
         }
 
         // PUT api/<DevisesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Devise devise)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id != devise.Id)
+            {
+                return BadRequest();
+            }
+            int index = lesDevises.FindIndex((d) => d.Id == id);
+            if (index < 0)
+            {
+                return NotFound();
+            }
+            lesDevises[index] = devise;
+            return NoContent();
         }
 
         // DELETE api/<DevisesController>/5
