@@ -13,7 +13,10 @@ namespace WSConvertisseur.Controllers
 
         public DevisesController()
         {
-            lesDevises = new List<Devise> { new Devise(1, "Dollar", 1.08), new Devise(2, "Franc Suisse", 1.07), new Devise(3, "Yen", 120) };
+            lesDevises = new List<Devise> {};
+            lesDevises.Add(new Devise(1, "Dollar", 1.08));
+            lesDevises.Add(new Devise(2, "Franc Suisse", 1.07));
+            lesDevises.Add(new Devise(3, "Yen", 120));
         }
 
         // GET: api/<DevisesController>
