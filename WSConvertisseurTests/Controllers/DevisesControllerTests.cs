@@ -66,5 +66,11 @@ namespace WSConvertisseur.Controllers.Tests
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Devise>), "Pas un IEnumerable"); // Test du type de retour
             CollectionAssert.AreEqual(list, expectedList, "Listes de devises différentes");
         }
+
+        [TestMethod()]
+        public void Post_NotExistingDevisePassed_ReturnsRightItem()
+        {
+            
+        }
     }
 }
