@@ -11,6 +11,9 @@ namespace WSConvertisseur.Controllers
     {
         public List<Devise> lesDevises;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DevisesController()
         {
             lesDevises = new List<Devise> {};

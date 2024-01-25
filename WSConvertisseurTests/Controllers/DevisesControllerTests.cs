@@ -26,5 +26,18 @@ namespace WSConvertisseur.Controllers.Tests
             Assert.IsInstanceOfType(result.Value, typeof(Devise), "Pas une Devise"); // Test du type du contenu (valeur) du retour
             Assert.AreEqual(new Devise(1, "Dollar", 1.08), (Devise?)result.Value, "Devises pas identiques"); //Test de la devise récupérée
         }
+
+        [TestMethod]
+        public void GetById_NotExistingIdPassed_ReturnsNotFound()
+        {
+            // Arrange
+            DevisesController controller = new DevisesController();
+            // Act
+            var result = controller.GetById(100);
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Devise>), "Pas un ActionResult"); // Test du type de retour
+            Assert.IsNull(result.Value, "Erreur est null"); //Test de l'erreur
+            Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult), "Pas une erreur"); // Test du type du contenu (valeur) du retour
+        }
     }
 }
