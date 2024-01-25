@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WSConvertisseur.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace WSConvertisseur.Controllers.Tests
 {
@@ -38,6 +39,12 @@ namespace WSConvertisseur.Controllers.Tests
             Assert.IsInstanceOfType(result, typeof(ActionResult<Devise>), "Pas un ActionResult"); // Test du type de retour
             Assert.IsNull(result.Value, "Erreur est null"); //Test de l'erreur
             Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult), "Pas une erreur"); // Test du type du contenu (valeur) du retour
+
+            // Vérification bon type d'erreur retournée
+            Assert.AreEqual(((NotFoundResult)result.Result).StatusCode, StatusCodes.Status404NotFound, "Pas 404"); // Version simplifiée
+
+            var errorResult = result.Result as NotFoundResult;
+            Assert.AreEqual(errorResult.StatusCode, StatusCodes.Status404NotFound, "Pas 404"); // Version longue
         }
     }
 }
