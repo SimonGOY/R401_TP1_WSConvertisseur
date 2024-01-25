@@ -19,14 +19,29 @@ namespace WSConvertisseur.Controllers
             lesDevises.Add(new Devise(3, "Yen", 120));
         }
 
+        /// <summary>
+        /// Get all currencies.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <response code="200">List of currencies (even if empty)</response>
         // GET: api/<DevisesController>
+        [ProducesResponseType(200)]
         [HttpGet]
         public IEnumerable<Devise> GetAll()
         {
             return lesDevises;
         }
 
+        /// <summary>
+        /// Get a single currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">The id of the currency</param>
+        /// <response code="200">When the currency id is found</response>
+        /// <response code="404">When the currency id is not found</response>
         // GET api/<DevisesController>/5
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         [HttpGet("{id}", Name = "GetDevise")]
         public ActionResult<Devise> GetById(int id)
         {
@@ -38,6 +53,17 @@ namespace WSConvertisseur.Controllers
             return devise;
         }
 
+        /// <summary>
+        /// Set a new currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">The id of the currency</param>
+        /// <param name="nomdevise">The name of the currency</param>
+        /// <param name="taux">The exchange rate of the currency</param>
+        /// <response code="200">When the currency is added</response>
+        /// <response code="404">When the currency can't be added</response>
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         [HttpPost]
         public ActionResult<Devise> Post([FromBody] Devise devise)
         {
@@ -72,8 +98,19 @@ namespace WSConvertisseur.Controllers
 
         // DELETE api/<DevisesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Devise? devise = lesDevises.FirstOrDefault((d) => d.Id == id);
+            if (devise == null)
+            {
+                return NotFound();
+            }
+            lesDevises.Remove(devise);
+            return NoContent();
         }
 
         
