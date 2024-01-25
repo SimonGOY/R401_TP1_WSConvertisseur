@@ -60,8 +60,8 @@ namespace WSConvertisseur.Controllers
         /// <param name="id">The id of the currency</param>
         /// <param name="nomdevise">The name of the currency</param>
         /// <param name="taux">The exchange rate of the currency</param>
-        /// <response code="200">When the currency is added</response>
-        /// <response code="404">When the currency can't be added</response>
+        /// <response code="201">When the currency is added</response>
+        /// <response code="400">When the currency can't be added</response>
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [HttpPost]
@@ -75,6 +75,18 @@ namespace WSConvertisseur.Controllers
             return CreatedAtRoute("GetDevise", new { id = devise.Id }, devise);
         }
 
+        /// <summary>
+        /// Update a currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">The id of the currency</param>
+        /// <response code="204">When the currency is pdated</response>
+        /// <response code="400">When the input format is not correct</response>
+        /// <response code="404">When the currency id is not found</response>
+        // DELETE api/<DevisesController>/5
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         // PUT api/<DevisesController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Devise devise)
@@ -96,7 +108,16 @@ namespace WSConvertisseur.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete one currency.
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">The id of the currency</param>
+        /// <response code="204">When the currency id is found</response>
+        /// <response code="404">When the currency id is not found</response>
         // DELETE api/<DevisesController>/5
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
@@ -111,8 +132,6 @@ namespace WSConvertisseur.Controllers
             }
             lesDevises.Remove(devise);
             return NoContent();
-        }
-
-        
+        }    
     }
 }
