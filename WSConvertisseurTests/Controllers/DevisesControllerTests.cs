@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using WSConvertisseur.Models;
 using Microsoft.AspNetCore.Http;
 
+
 namespace WSConvertisseur.Controllers.Tests
 {
     [TestClass()]
@@ -45,6 +46,25 @@ namespace WSConvertisseur.Controllers.Tests
 
             var errorResult = result.Result as NotFoundResult;
             Assert.AreEqual(errorResult.StatusCode, StatusCodes.Status404NotFound, "Pas 404"); // Version longue
+        }
+
+        [TestMethod()]
+        public void GetAllTest()
+        {
+            // Arrange
+            DevisesController controller = new DevisesController();
+            // Act
+            var result = controller.GetAll();
+            var list = result.ToList();
+            var expectedList = new List<Devise>
+            {
+                new Devise(1, "Dollar", 1.08),
+                new Devise(2, "Franc Suisse", 1.07),
+                new Devise(3, "Yen", 120)
+            };
+            // Assert 
+            Assert.IsInstanceOfType(result, typeof(IEnumerable<Devise>), "Pas un IEnumerable"); // Test du type de retour
+            CollectionAssert.AreEqual(list, expectedList, "Listes de devises différentes");
         }
     }
 }

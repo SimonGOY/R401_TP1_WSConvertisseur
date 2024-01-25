@@ -60,9 +60,7 @@ namespace WSConvertisseur.Controllers
         /// Set a new currency.
         /// </summary>
         /// <returns>Http response</returns>
-        /// <param name="id">The id of the currency</param>
-        /// <param name="nomdevise">The name of the currency</param>
-        /// <param name="taux">The exchange rate of the currency</param>
+        /// <param name="devise">The detail of the currency to add</param>
         /// <response code="201">When the currency is added</response>
         /// <response code="400">When the currency can't be added</response>
         [ProducesResponseType(201)]
