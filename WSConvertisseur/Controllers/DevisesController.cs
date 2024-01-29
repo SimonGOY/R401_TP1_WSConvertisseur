@@ -16,7 +16,7 @@ namespace WSConvertisseur.Controllers
         /// </summary>
         public DevisesController()
         {
-            lesDevises = new List<Devise> {};
+            lesDevises = new List<Devise> { };
             lesDevises.Add(new Devise(1, "Dollar", 1.08));
             lesDevises.Add(new Devise(2, "Franc Suisse", 1.07));
             lesDevises.Add(new Devise(3, "Yen", 120));
@@ -99,6 +99,7 @@ namespace WSConvertisseur.Controllers
             if (id != devise.Id)
             {
                 return BadRequest();
+                return BadRequest();
             }
             int index = lesDevises.FindIndex((d) => d.Id == id);
             if (index < 0)
@@ -120,19 +121,15 @@ namespace WSConvertisseur.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<Devise> Delete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            Devise? devise = lesDevises.FirstOrDefault((d) => d.Id == id);
-            if (devise == null)
+            Devise? _devise = lesDevises.FirstOrDefault(d => d.Id == id);
+            if (_devise == null)
             {
                 return NotFound();
             }
-            lesDevises.Remove(devise);
-            return NoContent();
-        }    
+            lesDevises.Remove(_devise);
+            return _devise;
+        }
     }
 }
